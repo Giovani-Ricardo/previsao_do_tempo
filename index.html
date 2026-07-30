@@ -1,0 +1,84 @@
+<!doctype html>
+<html class="no-js" lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+  <meta name="description" content="">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta property="og:image:alt" content="">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+
+  <!-- Add your site or application content here -->
+  <div class="d-flex flex-column flex-md-row flex-grow-1">
+    <!-- "flex-grow: 1;" -->
+    <main class="flex-grow-1 p-3">
+
+      <!-- Jumbotron: -->
+      <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+          <h1 class="display-5 fw-bold">
+            Contagem regressiva...
+          </h1>
+          <p class="col-md-8 fs-4">
+            Essa aplicação recupera de um Web Service a data de um evento, e então exibe a contagem regressiva
+          </p>
+        </div>
+
+      </div>
+
+      <div class="container">
+        <div id="counter-row" class="row text-white">
+          <div id="days" class="border border-light border-2 col bg-dark p-3 text-center fs-4">
+            0
+          </div>
+          <div id="hours" class="border border-light border-2 col bg-dark p-3 text-center fs-4">
+            0
+          </div>
+          <div id="minutes" class="border border-light border-2 col bg-dark p-3 text-center fs-4">
+            0
+          </div>
+          <div id="seconds" class="border border-light border-2 col bg-dark p-3 text-center fs-4">
+            0
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="border border-light border-2 col bg-light p-3 text-center fs-4">
+            dias
+          </div>
+          <div class="border border-light border-2 col bg-light p-3 text-center fs-4">
+            horas
+          </div>
+          <div class="border border-light border-2 col bg-light p-3 text-center fs-4">
+            minutos
+          </div>
+          <div class="border border-light border-2 col bg-light p-3 text-center fs-4">
+            segundos
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+  <script src="js/app.js"></script>
+  <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
