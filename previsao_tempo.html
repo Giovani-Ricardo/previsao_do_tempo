@@ -50,6 +50,23 @@
   <div class="d-flex flex-column flex-md-row flex-grow-1">
     <!-- "flex-grow: 1;" -->
     <main class="flex-grow-1 p-3">        
+        <h1 class="mb-4 text-center">Previsão do Tempo</h1>
+
+        <div class="input-group mb-3">
+            <input type="text" id="cidade" class="form-control" placeholder="Digite o nome da cidade...">
+            <button id="btnBuscar" class="btn btn-primary">Buscar</button>
+        </div>
+
+        <div id="resultado" class="card p-3 d-none text-center mb-4">
+            <h3 id="nomeCidade"></h3>
+            <img id="iconeClima" alt="Ícone do clima" class="mb-2">
+            <p id="descricao"></p>
+            <p><strong>Temperatura:</strong> <span id="temperatura"></span> °C</p>
+            <button id="btnSalvar" class="btn btn-success mt-2">Salvar cidade</button>
+        </div>
+
+        <h2 class="mt-5">Minhas Cidades Salvas</h2>
+        <ul id="listaCidades" class="list-group"></ul>  
 
     </main>
   </div>
