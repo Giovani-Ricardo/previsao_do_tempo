@@ -4,7 +4,6 @@ var router = express.Router();
 
 const { axios, host, params } = require('../config/openWeather');
 
-
 // Clima atual
 router.get('/', async function(req, res, next) {
     try {
