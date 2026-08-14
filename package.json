@@ -1,13 +1,9 @@
 {
-  "name": " ",
+  "name": "-",
   "version": "0.0.1",
   "description": "",
   "private": true,
-  "keywords": [
-    ""
-  ],
-  "license": "",
-  "author": "",
+  "keywords": [],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open --config webpack.config.dev.js",
@@ -23,5 +19,15 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.8"
-  }
+  },
+  "main": "webpack.common.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Giovani-Ricardo/previsao_do_tempo.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Giovani-Ricardo/previsao_do_tempo/issues"
+  },
+  "homepage": "https://github.com/Giovani-Ricardo/previsao_do_tempo#readme"
 }
