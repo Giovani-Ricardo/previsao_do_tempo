@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -9,7 +11,6 @@ var climaRouter = require('./routes/clima');
 
 var app = express();
 
-require('dotenv').config();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
