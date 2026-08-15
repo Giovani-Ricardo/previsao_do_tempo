@@ -156,9 +156,14 @@ async function renderizarListaCidades() {
     );
 
     listaCidadesEl.innerHTML = '';
-    resumos.forEach(({ cidade, dados }) => {
-        listaCidadesEl.appendChild(criarItemCidade(cidade, dados));
+    resumos.forEach(({ cidade, dados }, idx) => {
+        listaCidadesEl.appendChild(criarItemCidade(cidade, dados, idx));
     });
+}
+
+function extrairDiaSemana(dtTxt) {
+    const data = new Date(dtTxt.replace(' ', 'T'));
+    return data.toLocaleDateString('pt-BR', { weekday: 'short' });
 }
 
 function criarItemCarregando(cidade) {
@@ -168,9 +173,20 @@ function criarItemCarregando(cidade) {
     return item;
 }
 
-function criarItemCidade(cidade, dados) {
+function criarItemCidade(cidade, dados, idx) {
     const item = document.createElement('li');
-    item.className = 'list-group-item d-flex justify-content-between align-items-center';
+    item.className = 'list-group-item';
+
+    const colapsoId = `previsao-semana-${idx}`;
+
+    const cabecalho = document.createElement('div');
+    cabecalho.className = 'cabecalho-cidade d-flex justify-content-between align-items-center';
+    cabecalho.setAttribute('role', 'button');
+    cabecalho.setAttribute('tabindex', '0');
+    cabecalho.setAttribute('data-bs-toggle', 'collapse');
+    cabecalho.setAttribute('data-bs-target', `#${colapsoId}`);
+    cabecalho.setAttribute('aria-expanded', 'false');
+    cabecalho.setAttribute('aria-controls', colapsoId);
 
     const info = document.createElement('span');
 
@@ -191,13 +207,88 @@ function criarItemCidade(cidade, dados) {
         info.textContent = `${cidade} — não foi possível obter a previsão`;
     }
 
+    const acoes = document.createElement('span');
+    acoes.className = 'd-flex align-items-center';
+
+    const chevron = document.createElement('span');
+    chevron.className = 'chevron-collapse me-3';
+    chevron.textContent = '▾';
+
     const btnRemover = document.createElement('button');
     btnRemover.type = 'button';
     btnRemover.className = 'btn btn-sm btn-outline-danger';
     btnRemover.textContent = 'Remover';
-    btnRemover.addEventListener('click', () => removerCidade(cidade));
+    btnRemover.addEventListener('click', (event) => {
+        event.stopPropagation();
+        removerCidade(cidade);
+    });
 
-    item.appendChild(info);
-    item.appendChild(btnRemover);
+    acoes.appendChild(chevron);
+    acoes.appendChild(btnRemover);
+
+    cabecalho.appendChild(info);
+    cabecalho.appendChild(acoes);
+
+    const colapso = document.createElement('div');
+    colapso.className = 'collapse mt-3';
+    colapso.id = colapsoId;
+
+    const diasContainer = document.createElement('div');
+    diasContainer.className = 'previsao-semana d-flex flex-nowrap overflow-auto pb-2';
+
+    colapso.appendChild(diasContainer);
+
+    let carregado = false;
+    colapso.addEventListener('show.bs.collapse', () => {
+        if (carregado) {
+            return;
+        }
+        carregado = true;
+        carregarPrevisaoSemana(cidade, diasContainer);
+    });
+
+    item.appendChild(cabecalho);
+    item.appendChild(colapso);
     return item;
+}
+
+async function carregarPrevisaoSemana(cidade, container) {
+    container.textContent = 'Carregando previsão da semana...';
+
+    try {
+        const dias = await consultarClimaSemana(cidade);
+        container.textContent = '';
+        dias.forEach((dia) => container.appendChild(criarCardDia(dia)));
+    } catch (error) {
+        container.textContent = 'Não foi possível carregar a previsão da semana.';
+    }
+}
+
+function criarCardDia(dia) {
+    const card = document.createElement('div');
+    card.className = 'card text-center flex-shrink-0';
+
+    const corpo = document.createElement('div');
+    corpo.className = 'card-body p-2';
+
+    const nomeDia = document.createElement('p');
+    nomeDia.className = 'mb-1 fw-bold text-capitalize';
+    nomeDia.textContent = extrairDiaSemana(dia.dt_txt);
+
+    const icone = document.createElement('img');
+    icone.src = `https://openweathermap.org/img/wn/${dia.weather[0].icon}.png`;
+    icone.alt = dia.weather[0].description;
+    icone.width = 40;
+    icone.height = 40;
+    icone.className = 'icone-clima-bg icone-lista mx-auto d-block';
+
+    const temp = document.createElement('p');
+    temp.className = 'mb-0 small';
+    temp.textContent = `${Math.round(dia.main.temp)}°C`;
+
+    corpo.appendChild(nomeDia);
+    corpo.appendChild(icone);
+    corpo.appendChild(temp);
+    card.appendChild(corpo);
+    return card;
 }
