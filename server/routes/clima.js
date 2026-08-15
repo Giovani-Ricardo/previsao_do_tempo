@@ -5,7 +5,7 @@ var router = express.Router();
 const { axios, host, params } = require('../config/openWeather');
 
 // Clima atual
-router.get('/', async function(req, res, next) {
+router.get('/', async function (req, res, next) {
     try {
         const { city } = req.query;
 
@@ -37,7 +37,7 @@ router.get('/', async function(req, res, next) {
 
 
 // Previsão de 5 dias
-router.get('/forecast', async function(req, res, next) {
+router.get('/semana', async function (req, res, next) {
     try {
         const { city } = req.query;
 
@@ -53,8 +53,11 @@ router.get('/forecast', async function(req, res, next) {
                 q: city
             }
         });
-
-        res.json(response.data);
+        const resposta = response.data.list.filter(element =>
+            element.dt_txt.includes("12:00")
+        );
+        // res.json(response.data);
+        res.json(resposta);
 
     } catch (error) {
         if (error.response) {

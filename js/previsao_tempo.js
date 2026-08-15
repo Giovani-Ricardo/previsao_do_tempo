@@ -51,6 +51,17 @@ async function consultarClima(cidade) {
     return dados;
 }
 
+async function consultarClimaSemana(cidade) {
+    const response = await fetch(`${API_BASE_URL}/clima/semana?city=${encodeURIComponent(cidade)}`);
+    const dados = await response.json();
+
+    if (!response.ok) {
+        throw new Error(dados.error || 'Cidade não encontrada.');
+    }
+
+    return dados;
+}
+
 function exibirResultado(dados) {
     nomeCidadeEl.textContent = dados.name;
     iconeClimaEl.src = `https://openweathermap.org/img/wn/${dados.weather[0].icon}@2x.png`;
