@@ -90,6 +90,27 @@ textarea {
   box-sizing: content-box;
 }
 
+.cabecalho-cidade {
+  cursor: pointer;
+}
+
+.chevron-collapse {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.cabecalho-cidade[aria-expanded="true"] .chevron-collapse {
+  transform: rotate(180deg);
+}
+
+.previsao-semana {
+  gap: 0.5rem;
+}
+
+.previsao-semana .card {
+  min-width: 90px;
+}
+
 #iconeClima {
   display: block;
   width: 80px;
