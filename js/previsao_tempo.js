@@ -1,7 +1,9 @@
 const API_BASE_URL = 'http://localhost:3000';
 const STORAGE_KEY = 'cidadesSalvas';
+const MUNICIPIOS_URL = 'data/municipios-brasil.json';
 
 const cidadeInput = document.getElementById('cidade');
+const listaMunicipiosEl = document.getElementById('listaMunicipios');
 const btnBuscar = document.getElementById('btnBuscar');
 const resultado = document.getElementById('resultado');
 const nomeCidadeEl = document.getElementById('nomeCidade');
@@ -21,14 +23,39 @@ cidadeInput.addEventListener('keydown', (event) => {
 });
 btnSalvar.addEventListener('click', salvarCidadeAtual);
 
+carregarMunicipios();
 renderizarListaCidades();
 
-async function buscarClima() {
-    const cidade = cidadeInput.value.trim();
+async function carregarMunicipios() {
+    try {
+        const response = await fetch(MUNICIPIOS_URL);
+        const municipios = await response.json();
 
-    if (!cidade) {
+        const fragmento = document.createDocumentFragment();
+        municipios.forEach(([nome, uf]) => {
+            const option = document.createElement('option');
+            option.value = `${nome} - ${uf}`;
+            fragmento.appendChild(option);
+        });
+        listaMunicipiosEl.appendChild(fragmento);
+    } catch (error) {
+        console.error('Não foi possível carregar a lista de municípios.', error);
+    }
+}
+
+function extrairNomeCidade(valor) {
+    const separadorIndex = valor.lastIndexOf(' - ');
+    return separadorIndex === -1 ? valor : valor.slice(0, separadorIndex);
+}
+
+async function buscarClima() {
+    const valorDigitado = cidadeInput.value.trim();
+
+    if (!valorDigitado) {
         return;
     }
+
+    const cidade = extrairNomeCidade(valorDigitado);
 
     try {
         const dados = await consultarClima(cidade);
@@ -41,7 +68,7 @@ async function buscarClima() {
 }
 
 async function consultarClima(cidade) {
-    const response = await fetch(`${API_BASE_URL}/clima?city=${encodeURIComponent(cidade)}`);
+    const response = await fetch(`${API_BASE_URL}/clima?city=${encodeURIComponent(`${cidade},BR`)}`);
     const dados = await response.json();
 
     if (!response.ok) {
