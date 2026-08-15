@@ -53,7 +53,8 @@
         <h1 class="mb-4 text-center">Previsão do Tempo</h1>
 
         <div class="input-group mb-3">
-            <input type="text" id="cidade" class="form-control" placeholder="Digite o nome da cidade...">
+            <input type="text" id="cidade" class="form-control" list="listaMunicipios" placeholder="Digite ou selecione uma cidade..." autocomplete="off">
+            <datalist id="listaMunicipios"></datalist>
             <button id="btnBuscar" class="btn btn-primary">Buscar</button>
         </div>
 
