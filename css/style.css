@@ -84,6 +84,24 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+.icone-clima-bg {
+  background-color: #0d6efd;
+  border-radius: 0.5rem;
+  box-sizing: content-box;
+}
+
+#iconeClima {
+  display: block;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  padding: 8px;
+}
+
+.icone-clima-bg.icone-lista {
+  padding: 4px;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
