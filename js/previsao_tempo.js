@@ -142,7 +142,7 @@ function criarItemCidade(cidade, dados) {
         icone.alt = dados.weather[0].description;
         icone.width = 30;
         icone.height = 30;
-        icone.className = 'me-2';
+        icone.className = 'me-2 icone-clima-bg icone-lista';
 
         const texto = document.createElement('strong');
         texto.textContent = `${cidade} — ${Math.round(dados.main.temp)}°C, ${dados.weather[0].description}`;
